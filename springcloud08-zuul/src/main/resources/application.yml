@@ -1,0 +1,18 @@
+server:
+  port: 9000  servlet:    context-path: /init-context-path
+    
+spring:
+  application:
+    name: zuul-gateway
+    
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:5000/eureka/
+      
+zuul:
+  ignored-services: '*'                   # 忽略指定的微服务名称，让用户不能通过微服务名称访问，'*'表示忽略所有微服务名称
+  prefix: /init-prefix                    # 给访问路径添加统一前缀  routes:    employee:                             # 自定义路由规则的名称，在底层的数据结构中是Map的key
+      service-id: atguigu-feign-consumer  # 目标微服务名称，ZuulRoute类型的一个属性
+      path: /zuul-emp/**                  # 用来代替目标微服务名称的路径，ZuulRoute类型的一个属性
+                                          # /**表示匹配多层路径，如果没有加/**则不能匹配后续的多层路径了
